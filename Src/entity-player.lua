@@ -3,6 +3,20 @@
 Player = {}
 Player.__index = Player
 
+local Player1Key = { 
+        up = Keys.Up, 
+        down = Keys.Down, 
+        left = Keys.Left, 
+        right = Keys.Right, 
+    }
+local Player2Key = { 
+        up = Keys.W, 
+        down = Keys.S, 
+        left = Keys.A, 
+        right = Keys.D, 
+    }
+
+
 function Player:Init( px, py, spriteName, playerNum )
     
     --@ record bounds
@@ -15,17 +29,20 @@ function Player:Init( px, py, spriteName, playerNum )
     local _player = {
         playeridx = playerNum,
         hitRect = NewRect( px, py, SpriteSize().X, SpriteSize().Y ),
-        metaSprite = MetaSprite( spriteName ), 
+        metaSprite = spriteName, 
+        keys = nil,
         alive = true,
-        blobX = px,
-        blobY = py,
         frame = 1,
         speed = 1,
-        blobSize = 20,
-        blobSpeed = 1,
+        speedPerFrame = 1,
         dx = 0,
         dy = 0
     }
+    if( playerNum == 1 ) then 
+        _player.keys = Player1Key
+    else
+        _player.keys = Player2Key
+    end
 
     setmetatable(_player, Player)
     return _player
@@ -34,50 +51,62 @@ end
 
 function Player:Update( timeDelta )
     
-    dx = self.dx
-    dy = self.dy
+    local lastPos = self.hitRect
+    self.dx = 0
+    self.dy = 0
 
     -- If left is pressed, make the x velocity towards the left.
-    if( Key( Keys.Left ) ) then
-        self.dx = dx - self.blobSpeed
+    if( Key( self.keys.left ) ) then
+        self.dx = self.dx - self.speedPerFrame
     end
 
     -- If right is pressed, make the x velocity towards the right.
-    if( Key( Keys.Right ) ) then
-        self.dx = dx + self.blobSpeed
+    if( Key( self.keys.right ) ) then
+        self.dx = self.dx + self.speedPerFrame
     end
 
     -- If up is pressed, make the y velocity upwards.
-    if( Key( Keys.Up ) ) then
-        self.dy = dy - self.blobSpeed
+    if( Key( self.keys.up ) ) then
+        self.dy = self.dy - self.speedPerFrame
     end
 
     -- If down is pressed, make the y velocity downwards.
-    if( Key( Keys.Down ) ) then
-        self.dy = dy + self.blobSpeed
+    if( Key( self.keys.down ) ) then
+        self.dy = self.dy + self.speedPerFrame
     end
 
     -- calculating the net x and y velocities, 
     -- change the player's position accordingly.
-    self.blobX +  = self.dx
-    self.blobY +  = self.dy
     self.hitRect.X + = self.dx
     self.hitRect.Y + = self.dy
 
-    -- restrict it within boundaries
-    self.blobX % = width
-    self.blobY % = heigth
-    self.hitRect.X % = dx
-    self.hitRect.Y % = dy
-    
-    -- Since the player is dead, there is nothing to do and we exit 
-    -- out of the player's `LateUpdate()` function. This also insures 
-    -- that we don't try to collect the key or gem in the next block of code.
-    
-    if( self.alive == false ) then
-        return
+    -- restrict it within boundar
+    if( self.hitRect.X < 0 ) then
+        self.hitRect.X = 0
+    end
+    if( self.hitRect.Y < 0 ) then
+        self.hitRect.Y = 0
+    end
+    if( self.hitRect.X > Display().X - SpriteSize().X ) then
+        self.hitRect.X = Display().X - SpriteSize().X
+    end
+    if( self.hitRect.Y > Display().Y - SpriteSize().Y ) then
+        self.hitRect.Y = Display().Y - SpriteSize().Y 
     end
 
+end
+
+function Player:RevertThisFrame()
+    self.hitRect.X -= self.dx
+    self.hitRect.Y -= self.dy
+end
+
+function Player:GetDx()
+    return self.dx
+end
+
+function Player:GetDy()
+    return self.dy
 end
 
 -- get the position
@@ -86,5 +115,6 @@ function Player:GetPosition()
 end
 
 function Player:Draw()
-    DrawMetaSprite ( FindMetaSpriteId( "player" ), self.blobX, self.blobY )
+    -- DrawMetaSprite( self.metaSprite, self.hitRect.X, self.hitRect.Y )
+    DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 8, DrawMode.Sprite )
 end

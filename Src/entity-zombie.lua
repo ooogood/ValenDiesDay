@@ -4,14 +4,11 @@ Zombie.__index = Zombie
 function Zombie:Init(x, y, fH, fV, direction)
 
     local _zombie = {
-        posX = x,
-        posY = y,
+        hitRect = NewRect( x, y, SpriteSize().X, SpriteSize().Y ),
         flipH = fH or false,
         flipV = fV or false,
         drawMode = DrawMode.Sprite,
-        delay = 400,
         type = TYPE_ZOMBIE,
-        checkAgainst = TYPE_PLAYER,
         speed = .3,
         movement = {
             Up = false,
@@ -46,25 +43,29 @@ function Zombie:Init(x, y, fH, fV, direction)
 
 end
 
+function Zombie:GetPosition()
+    return self.hitRect
+end
+
 function Zombie:Update(timeDelta)
 
     if self.movement.Up then
-        self.posY = self.posY - 1
+        self.hitRect.Y = self.hitRect.Y - 1
     end
 
     if self.movement.Down then
-        self.posY = self.posY + 1
+        self.hitRect.Y = self.hitRect.Y + 1
     end
 
     if self.movement.Left then
-        self.posX = self.posX - 1
+        self.hitRect.X = self.hitRect.X - 1
     end
 
     if self.movement.Right then
-        self.posX = self.posX + 1
+        self.hitRect.X = self.hitRect.X + 1
     end
   
-    if self.posX < 0 or self.posX > Display().x + 20 or self.posY < 0 or self.posY > Display().y + 20 then
+    if self.hitRect.X < 0 or self.hitRect.X > Display().X + 20 or self.hitRect.Y < 0 or self.hitRect.Y > Display().Y + 20 then
         self.outBound = true
     end
 
@@ -72,6 +73,6 @@ end
 
 function Zombie:Draw()
 
-    DrawRect( self.posX, self.posY, 8, 8, 14, DrawMode.Sprite )
+    DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 14, DrawMode.Sprite )
 
 end

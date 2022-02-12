@@ -2,7 +2,9 @@
     "MetaSprites": {
         "collections": [
             {"name": "heart", "spriteIDs": [1], "width": 2},
-            {"name": "hole", "spriteIDs": [1], "width": 1}
+            {"name": "hole", "spriteIDs": [1], "width": 1},
+            {"name": "player1", "spriteIDs": [1], "width": 2},
+            {"name": "player2", "spriteIDs": [1], "width": 1}
         ]
     }
 }
