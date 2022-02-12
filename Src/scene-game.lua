@@ -66,11 +66,12 @@ function GameScene:GenerateEnemy()
 		self:AddEnemy()
     end
 end
+
 -- generate heart
 function GameScene:GenerateHeart()
 	if( self.heart == nil ) then
 		self.heart = Heart:Init()
-		self.AddEntity( self.heart )
+		self:AddEntity( self.heart )
 	end
 end
 
@@ -87,11 +88,11 @@ function GameScene:Update(timeDelta)
 	-- todo
 
 	-- check heart and score
-	if( self.heart.goal == true ) then
+	if( self.heart ~= nil and self.heart.goal == true ) then
 		self.totalScore = self.totalScore + 1
 		self.heart = nil
-		self:GenerateHeart()
 	end
+	self:GenerateHeart()
 
 	-- update all eneities
 	for i = 1, self.totalEntities do 

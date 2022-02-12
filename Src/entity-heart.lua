@@ -20,6 +20,7 @@ function Heart:UpdatePosition(x, y)
 end
 
 function Heart:Update(timeDelta)
+    -- check if this heart is near the hole
     local d_x = self.x - self.hole_position[1]
     local d_y = self.y - self.hole_position[2]
     if (math.abs(d_x) <= 2 and math.abs(d_y) <= 2) then
