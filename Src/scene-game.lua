@@ -1,4 +1,5 @@
 LoadScript("entity-zombie")
+LoadScript("entity-heart")
 
 GameScene = {}
 GameScene.__index = GameScene
@@ -10,6 +11,7 @@ function GameScene:Init()
 		totalScore = 0,
 		gameLV = 1,
 		lvTimer = 0, -- unit: ms
+		heart = nil,
 	}
 
 	setmetatable(_gamescene, GameScene)
@@ -18,6 +20,11 @@ end
 
 function GameScene:GetTotalScore()
 	return self.totalScore
+end
+
+function GameScene:AddEntity(entity)
+	table.insert( self.entities, entity )
+	self.totalEntities = #self.entities
 end
 
 function GameScene:RemoveEntity(entity)
@@ -50,16 +57,21 @@ function GameScene:AddEnemy()
 	end
 	
 	enemy = Zombie:Init( xpos, ypos, fH, false, direction )
-	table.insert( self.entities, enemy )
-	self.totalEntities = #self.entities
+	self:AddEntity( enemy )
 end
 
 -- generate zombies according to game level
 function GameScene:GenerateEnemy()
 	if (math.random(0, 100) < self.gameLV * 20 ) then
-    	-- DrawRect( 16, 16, 8, 8, 14, DrawMode.Sprite )
 		self:AddEnemy()
     end
+end
+-- generate heart
+function GameScene:GenerateHeart()
+	if( self.heart == nil ) then
+		self.heart = Heart:Init()
+		self.AddEntity( self.heart )
+	end
 end
 
 function GameScene:Update(timeDelta)
@@ -74,7 +86,14 @@ function GameScene:Update(timeDelta)
 	-- remove out of bound enemies
 	-- todo
 
-	-- update eneities
+	-- check heart and score
+	if( self.heart.goal == true ) then
+		self.totalScore = self.totalScore + 1
+		self.heart = nil
+		self:GenerateHeart()
+	end
+
+	-- update all eneities
 	for i = 1, self.totalEntities do 
 		self.entities[ i ]:Update(timeDelta)
 	end
@@ -89,8 +108,9 @@ end
 
 function GameScene:Reset()
 	RedrawDisplay()
+	self.heart = nil
 	self.totalScore = 0
-	self.entities = {}	
+	self.entities = {}
 	self.totalEntities = 0
 	self.gameLV = 1
 	self.lvTimer = 0
