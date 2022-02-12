@@ -29,6 +29,8 @@ end
 
 function Heart:Draw()
     DrawMetaSprite("hole", self.hole_position[1], self.hole_position[2])
-    DrawMetaSprite("heart", self.x, self.y)
+    if (self.goal ~= true) then
+        DrawMetaSprite("heart", self.x, self.y)
+    end
 end
 
