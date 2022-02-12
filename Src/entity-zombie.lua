@@ -1,6 +1,8 @@
 Zombie = {}
 Zombie.__index = Zombie
 
+local movement = nil
+
 function Zombie:Init(x, y, fH, fV, direction)
 
     local _zombie = {
@@ -9,10 +11,10 @@ function Zombie:Init(x, y, fH, fV, direction)
         flipH = fH or false,
         flipV = fV or false,
         drawMode = DrawMode.Sprite,
-        delay = 400
-        type = TYPE_ZOMBIE
-        checkAgainst = TYPE_PLAYER
-        speed = .3
+        delay = 400,
+        type = TYPE_ZOMBIE,
+        checkAgainst = TYPE_PLAYER,
+        speed = .3,
     }
 
     local movement = {
@@ -39,9 +41,9 @@ function Zombie:Init(x, y, fH, fV, direction)
     end
 
 
-    setMetaTable(zombie, Zombie)
+    setmetatable(_zombie, Zombie)
 
-    return zombie
+    return _zombie
 
 end
 
@@ -74,6 +76,6 @@ end
 
 function Zombie:Draw()
 
-    DrawRect( zombie.posX, zombie.posY, 8, 8, 2, DrawMode.Sprite )
+    DrawRect( zombie.posX, zombie.posY, 8, 8, 14, DrawMode.Sprite )
 
 end
