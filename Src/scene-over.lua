@@ -33,7 +33,7 @@ function OverScene:ShowText()
 end
 
 function OverScene:Update(timeDelta)
-	if(Key(Keys.Enter, InputStateReleased)) then
+	if(Key(Keys.Enter, InputState.Released)) then
 		SwitchScene(WELCOME)
 	end
 end

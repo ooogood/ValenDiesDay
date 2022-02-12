@@ -24,7 +24,7 @@ function WelcomeScene:ShowText()
 end
 
 function WelcomeScene:Update(timeDelta)
-	if(Key(Keys.Enter, InputStateReleased)) then
+	if(Key(Keys.Enter, InputState.Released)) then
 		-- SwitchScene(GAME)
 		SwitchScene(OVER)
 	end
