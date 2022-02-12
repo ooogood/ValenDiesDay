@@ -19,6 +19,8 @@ function Zombie:Init(x, y, fH, fV, direction)
             Left = false,
             Right = false
         },
+        -- out of display flag
+        outBound = false,
     }
 
 
@@ -62,10 +64,9 @@ function Zombie:Update(timeDelta)
         self.posX = self.posX + 1
     end
   
-    -- -- This is where we calculate if the direction the enemy should be moving. We do this by setting the `input.left` flag to the `flipH` value. By default, all entities are facing right which would make `flipH` false. Knowing this, we can set the `input.right` flag to the opposite of `flipH` via the `not` keyword.
-    -- self.input.Left = self.flipH
-    -- self.input.Right = not self.flipH
-    
+    if self.posX < 0 or self.posX > Display().x + 20 or self.posY < 0 or self.posY > Display().y + 20 then
+        self.outBound = true
+    end
 
 end
 
