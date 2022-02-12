@@ -1,48 +1,33 @@
---[[
-  Pixel Vision 8 - New Template Script
-  Copyright (C) 2017, Pixel Vision 8 (@pixelvision8)
-  Created by Jesse Freeman (@jessefreeman)
+LoadScript("scene-over")
+LoadScript("scene-welcome")
 
-  This project was designed to display some basic instructions when you create
-  a new game.  Simply delete the following code and implement your own Init(),
-  Update() and Draw() logic.
+local scenes = nil
+local activeScene = nil
+local activeSceneId = 0
 
-  Learn more about making Pixel Vision 8 games at
-  https://www.pixelvision8.com/getting-started
-]]--
+-- define scenes
+WELCOME, GAME, OVER = 1, 2, 2
 
---[[
-  This this is an empty game, we will the following text. We combined two sets
-  of fonts into the default.font.png. Use uppercase for larger characters and
-  lowercase for a smaller one.
-]]--
-local message = "EMPTY GAME\n\n\nThis is an empty game template.\n\n\nVisit 'www.pixelvision8.com' to learn more about creating games from scratch."
-
---[[
-  The Init() method is part of the game's lifecycle and called a game starts.
-  We are going to use this method to configure background color,
-  ScreenBufferChip and draw a text box.
-]]--
 function Init()
+  scenes = {
+    WelcomeScene:Init(),
+    -- GameScene:Init(),
+    OverScene:Init(),
+  }
+  activeScene = scenes[ 1 ]
+  SwitchScene( WELCOME )
+end
 
-  -- Here we are manually changing the background color
-  BackgroundColor(0)
+-- We use this function to prepare a new scene and run through all of the steps required to make sure the new scene is correctly reset and ready to go.
+function SwitchScene(id)
 
-  local display = Display()
+  activeSceneId = id
+  activeScene = scenes[activeSceneId]
+  activeScene:Reset()
 
-  -- We are going to render the message in a box as tiles. To do this, we
-  -- need to wrap the text, then split it into lines and draw each line.
-  local wrap = WordWrap(message, (display.x / 8) - 2)
-  local lines = SplitLines(wrap)
-  local total = #lines
-  local startY = ((display.y / 8) - 1) - total
-
-  -- We want to render the text from the bottom of the screen so we offset
-  -- it and loop backwards.
-  for i = total, 1, - 1 do
-    DrawText(lines[i], 1, startY + (i - 1), DrawMode.Tile, "large", 15)
+  if ( activeSceneId == OVER ) then
+    -- scenes[OVER]:SetTotalScore(scenes[GAME]:GetTotalScore())
   end
-
 end
 
 --[[
@@ -51,9 +36,10 @@ end
   timeDelta, which is the difference in milliseconds since the last frame.
 ]]--
 function Update(timeDelta)
-
-  -- TODO add your own update logic here
-
+  if(activeScene ~= nil) then
+    -- Call the active scene's `Update()` function.
+    activeScene:Update(timeDelta)
+  end  
 end
 
 --[[
@@ -62,11 +48,8 @@ end
   to render sprites to the display.
 ]]--
 function Draw()
-
-  -- We can use the RedrawDisplay() method to clear the screen and redraw
-  -- the tilemap in a single call.
-  RedrawDisplay()
-
-  -- TODO add your own draw logic here.
-
+  if(activeScene ~= nil) then
+    -- Call the active scene's `Draw()` function.
+    activeScene:Draw()
+  end
 end
