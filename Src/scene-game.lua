@@ -10,8 +10,6 @@ function GameScene:Init()
 		totalScore = 0,
 		gameLV = 1,
 		lvTimer = 0, -- unit: ms
-		entities = {},
-		totalEntities = 0,
 	}
 
 	setmetatable(_gamescene, GameScene)
@@ -20,11 +18,6 @@ end
 
 function GameScene:GetTotalScore()
 	return self.totalScore
-end
-
-function GameScene:AddEntity(entity)
-	table.insert(self.entities, entity)
-	self.totalEntities = #self.entities
 end
 
 function GameScene:RemoveEntity(entity)
@@ -65,7 +58,7 @@ end
 function GameScene:GenerateEnemy()
 	if (math.random(0, 100) < self.gameLV * 20 ) then
     	-- DrawRect( 16, 16, 8, 8, 14, DrawMode.Sprite )
-		self.AddEnemy()
+		self:AddEnemy()
     end
 end
 
