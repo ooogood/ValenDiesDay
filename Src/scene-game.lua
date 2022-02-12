@@ -10,6 +10,8 @@ function GameScene:Init()
 		totalScore = 0,
 		gameLV = 1,
 		lvTimer = 0, -- unit: ms
+		entities = {},
+		totalEntities = 0,
 	}
 
 	setmetatable(_gamescene, GameScene)
@@ -42,20 +44,20 @@ function GameScene:AddEnemy()
 	local fH = false
 
 	if( direction == 1 ) then
-		xpos = math.random( 0, 1 ) * Display().x
+		xpos = math.random() * Display().x
 		ypos = Display().y
 	elseif( direction == 2 ) then
-		xpos = math.random( 0, 1 ) * Display().x 
+		xpos = math.random() * Display().x 
 	elseif( direction == 3 ) then
 		xpos = Display().x
-		ypos = math.random( 0, 1) * Display().y 
+		ypos = math.random() * Display().y 
 		fH = true
 	else
-		ypos = math.random( 0, 1 ) * Display().y 
+		ypos = math.random() * Display().y 
 	end
 	
 	enemy = Zombie:Init( xpos, ypos, fH, false, direction )
-	-- table.add( self.entities, enemy )
+	table.insert( self.entities, enemy )
 	self.totalEntities = #self.entities
 end
 
@@ -88,7 +90,7 @@ end
 function GameScene:Draw()
 	RedrawDisplay()
 	for i = 1, self.totalEntities do 
-		self.entities[ i ]:Update(timeDelta)
+		self.entities[ i ]:Draw()
 	end
 end
 

@@ -1,8 +1,6 @@
 Zombie = {}
 Zombie.__index = Zombie
 
-local movement = nil
-
 function Zombie:Init(x, y, fH, fV, direction)
 
     local _zombie = {
@@ -15,31 +13,30 @@ function Zombie:Init(x, y, fH, fV, direction)
         type = TYPE_ZOMBIE,
         checkAgainst = TYPE_PLAYER,
         speed = .3,
+        movement = {
+            Up = false,
+            Down = false,
+            Left = false,
+            Right = false
+        },
     }
 
-    local movement = {
-        Up = false,
-        Down = false,
-        Left = false,
-        Right = false
-    }
 
     if direction == 1 then
-        movement.Up = true
+        _zombie.movement.Up = true
     end
 
     if direction == 2 then
-        movement.Down = true
+        _zombie.movement.Down = true
     end
 
     if direction == 3 then
-        movement.Left = true
+        _zombie.movement.Left = true
     end
 
     if direction == 4 then
-        movement.Right = true
+        _zombie.movement.Right = true
     end
-
 
     setmetatable(_zombie, Zombie)
 
@@ -47,35 +44,33 @@ function Zombie:Init(x, y, fH, fV, direction)
 
 end
 
-
 function Zombie:Update(timeDelta)
 
-    if movement.Up then
-        posY = posY - 1
+    if self.movement.Up then
+        self.posY = self.posY - 1
     end
 
-    if movement.Down then
-        posY = posY + 1
+    if self.movement.Down then
+        self.posY = self.posY + 1
     end
 
-    if movement.Left then
-        posX = posX - 1
+    if self.movement.Left then
+        self.posX = self.posX - 1
     end
 
-    if movement.Right then
-        posX = posX + 1
+    if self.movement.Right then
+        self.posX = self.posX + 1
     end
   
-  
-    -- This is where we calculate if the direction the enemy should be moving. We do this by setting the `input.left` flag to the `flipH` value. By default, all entities are facing right which would make `flipH` false. Knowing this, we can set the `input.right` flag to the opposite of `flipH` via the `not` keyword.
-    self.input.Left = self.flipH
-    self.input.Right = not self.flipH
+    -- -- This is where we calculate if the direction the enemy should be moving. We do this by setting the `input.left` flag to the `flipH` value. By default, all entities are facing right which would make `flipH` false. Knowing this, we can set the `input.right` flag to the opposite of `flipH` via the `not` keyword.
+    -- self.input.Left = self.flipH
+    -- self.input.Right = not self.flipH
     
 
 end
 
 function Zombie:Draw()
 
-    DrawRect( zombie.posX, zombie.posY, 8, 8, 14, DrawMode.Sprite )
+    DrawRect( self.posX, self.posY, 8, 8, 14, DrawMode.Sprite )
 
 end
