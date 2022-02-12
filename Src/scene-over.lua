@@ -39,10 +39,10 @@ function OverScene:Update(timeDelta)
 end
 
 function OverScene:Draw()
-	--pass
+	RedrawDisplay()
+	self:ShowText()
 end
 
 function OverScene:Reset()
-	Clear()
-	self:ShowText()
+	self.finalScore = 0
 end

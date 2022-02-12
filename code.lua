@@ -1,17 +1,18 @@
 LoadScript("scene-over")
 LoadScript("scene-welcome")
+LoadScript("scene-game")
 
 local scenes = nil
 local activeScene = nil
 local activeSceneId = 0
 
 -- define scenes
-WELCOME, GAME, OVER = 1, 2, 2
+WELCOME, GAME, OVER = 1, 2, 3
 
 function Init()
   scenes = {
     WelcomeScene:Init(),
-    -- GameScene:Init(),
+    GameScene:Init(),
     OverScene:Init(),
   }
   activeScene = scenes[ 1 ]
@@ -26,7 +27,7 @@ function SwitchScene(id)
   activeScene:Reset()
 
   if ( activeSceneId == OVER ) then
-    -- scenes[OVER]:SetTotalScore(scenes[GAME]:GetTotalScore())
+    scenes[OVER]:SetTotalScore(scenes[GAME]:GetTotalScore())
   end
 end
 

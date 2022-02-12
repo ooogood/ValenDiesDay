@@ -25,16 +25,15 @@ end
 
 function WelcomeScene:Update(timeDelta)
 	if(Key(Keys.Enter, InputState.Released)) then
-		-- SwitchScene(GAME)
-		SwitchScene(OVER)
+		SwitchScene(GAME)
 	end
 end
 
 function WelcomeScene:Draw()
-	--pass
+	RedrawDisplay()
+	self:ShowText()
 end
 
 function WelcomeScene:Reset()
-	Clear()
-	self:ShowText()
+	--pass
 end
