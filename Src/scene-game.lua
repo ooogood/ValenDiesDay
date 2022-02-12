@@ -85,7 +85,12 @@ function GameScene:Update(timeDelta)
 	-- generate enemies according to game level
 	self:GenerateEnemy()
 	-- remove out of bound enemies
-	-- todo
+	for i = 1, self.totalEntities - 10 do
+		if self.entities[i].outBound == true then
+			table.remove(self.entities, i)
+			self.totalEntities = #self.entities
+		end
+	end
 
 	-- check heart and score
 	if( self.heart ~= nil and self.heart.goal == true ) then
