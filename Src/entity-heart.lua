@@ -1,6 +1,9 @@
 Heart = {}
 Heart.__index = Heart
 
+local frameDelay = 200
+local totalFrames = 4
+
 function Heart:Init()
     spriteSize = SpriteSize()
     xpos = math.random(CANVASX_MIN + spriteSize.X * 2, CANVASX_MAX-spriteSize.X * 2)
@@ -10,6 +13,8 @@ function Heart:Init()
         type = TYPE_HEART,
         goal = false,
         hole_position = { ( CANVASX_MAX - CANVASX_MIN - spriteSize.X * 2 ) / 2, ( CANVASY_MAX - CANVASY_MIN - spriteSize.Y * 2 ) / 2 },
+        frame = 1,
+        frameTime = 0,
     }
     setmetatable(_heart, Heart)
     return _heart
@@ -56,12 +61,21 @@ function Heart:Update(timeDelta)
         print("goal")
         self.goal = true
     end
+    -- process frame
+    self.frameTime += timeDelta
+    if( self.frameTime > frameDelay) then
+        self.frameTime = 0
+        self.frame += 1
+        if( self.frame > totalFrames ) then
+            self.frame = 1
+        end
+    end
 end
 
 function Heart:Draw()
     DrawMetaSprite("hole", self.hole_position[1], self.hole_position[2] )
     if (self.goal ~= true) then
-        DrawMetaSprite("heart", self.hitRect.X, self.hitRect.Y )
+        DrawMetaSprite("heart-" .. self.frame, self.hitRect.X, self.hitRect.Y )
     end
 end
 

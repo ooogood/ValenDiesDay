@@ -15,7 +15,7 @@ function IntroScene:ShowText()
 	local storyText = {
 		"You are a pair of bride and ",
 		"groom who have done every ",
-		"evil things.",
+		"evil things while alive.",
 		"",
 		"Now you are stuck in hell.",
 		"",

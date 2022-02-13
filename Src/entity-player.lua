@@ -3,6 +3,8 @@
 Player = {}
 Player.__index = Player
 
+local frameDelay = 100
+local totalFrames = 4
 local Player1Key = { 
         up = Keys.Up, 
         down = Keys.Down, 
@@ -31,7 +33,9 @@ function Player:Init( px, py, spriteName, playerNum )
         speed = 1,
         speedPerFrame = 1,
         dx = 0,
-        dy = 0
+        dy = 0,
+        frame = 1,
+        frameTime = 0,
     }
     if( playerNum == 1 ) then 
         _player.keys = Player1Key
@@ -88,6 +92,20 @@ function Player:Update( timeDelta )
     if( self.hitRect.Y > CANVASY_MAX - SpriteSize().Y * 2 ) then
         self.hitRect.Y = CANVASY_MAX - SpriteSize().Y * 2 
     end
+    -- process frame
+    if( math.abs( self.dx ) > 0 or math.abs( self.dy ) > 0) then 
+        -- only update frame when moving
+        self.frameTime += timeDelta
+    else 
+        self.frame = 1
+    end
+    if( self.frameTime > frameDelay) then
+        self.frameTime = 0
+        self.frame += 1
+        if( self.frame > totalFrames ) then
+            self.frame = 1
+        end
+    end
 
 end
 
@@ -110,6 +128,5 @@ function Player:GetPosition()
 end
 
 function Player:Draw()
-    DrawMetaSprite( self.metaSprite, self.hitRect.X, self.hitRect.Y )
-    --DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 8, DrawMode.Sprite )
+    DrawMetaSprite( self.metaSprite .. self.frame, self.hitRect.X, self.hitRect.Y )
 end

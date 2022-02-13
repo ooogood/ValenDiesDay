@@ -137,9 +137,8 @@ function GameScene:Update(timeDelta)
 	end
 	for i = 1, self.totalEntities do 
 		if( self.entities[ i ].type == TYPE_ZOMBIE ) then
-			-- zombie is 8 * 16, other objects are 16 * 16
-			if CheckCollision( p1Pos, self.entities[ i ]:GetPosition(), spriteSize.X, spriteSize.Y * 2 ) or
-				CheckCollision( p2Pos, self.entities[ i ]:GetPosition(), spriteSize.X, spriteSize.Y * 2 ) then
+			if CheckCollision( p1Pos, self.entities[ i ]:GetPosition(), spriteSize.X * 1.5, spriteSize.Y * 1.5 ) or
+				CheckCollision( p2Pos, self.entities[ i ]:GetPosition(), spriteSize.X * 1.5, spriteSize.Y * 1.5 ) then
 				self:GameOver()
 				return
 			end
@@ -157,7 +156,6 @@ function GameScene:Update(timeDelta)
 			self.heart:UpdatePosition( hpos.X, hpos.Y )
 		end
 	end
-	print(string.format("%d", self.totalEntities))
 end
 
 function CheckCollision(o1, o2, gapx, gapy)
@@ -182,8 +180,8 @@ function GameScene:Reset()
 	self.totalScore = 0
 	self.gameLV = 1
 	self.lvTimer = 0
-	self.player1 = Player:Init( ( CANVASX_MAX * 2) / 3 , CANVASY_MAX / 3, "player1", 1 )
-	self.player2 = Player:Init( CANVASX_MAX / 3, CANVASY_MAX / 3, "player2", 2 )
+	self.player1 = Player:Init( ( CANVASX_MAX * 2) / 3 , CANVASY_MAX / 3, "player1-", 1 )
+	self.player2 = Player:Init( CANVASX_MAX / 3, CANVASY_MAX / 3, "player2-", 2 )
 	self.entities = { self.player1, self.player2 }
 	self.totalEntities = 2
 	self.musicTimer = 0

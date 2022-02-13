@@ -1,5 +1,7 @@
 Zombie = {}
 Zombie.__index = Zombie
+local frameDelay = 100
+local totalFrames = 4
 
 function Zombie:Init(x, y, fH, fV, direction)
 
@@ -18,7 +20,9 @@ function Zombie:Init(x, y, fH, fV, direction)
         },
         -- out of display flag
         outBound = false,
-        metaSprite = "zombie"
+        metaSprite = "zombie-",
+        frame = 1,
+        frameTime = 0,
     }
 
 
@@ -71,11 +75,17 @@ function Zombie:Update(timeDelta)
         self.outBound = true
     end
 
+    -- process frame
+    self.frameTime += timeDelta
+    if( self.frameTime > frameDelay) then
+        self.frameTime = 0
+        self.frame += 1
+        if( self.frame > totalFrames ) then
+            self.frame = 1
+        end
+    end
 end
 
 function Zombie:Draw()
-    DrawMetaSprite( self.metaSprite, self.hitRect.X, self.hitRect.Y )
-
-    --DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 14, DrawMode.Sprite )
-
+    DrawMetaSprite( self.metaSprite .. self.frame, self.hitRect.X, self.hitRect.Y )
 end
