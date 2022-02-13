@@ -162,7 +162,7 @@ end
 
 function GameScene:Draw()
 	RedrawDisplay()
-	--DrawMetaSprite("background", 0, 0, false, false, DrawMode.TilemapCache)
+	DrawText( string.format("LOVE: %d", self.totalScore), 2, 2 ,DrawMode.Sprite, "large", 15 )
 	for i = 1, self.totalEntities do 
 		self.entities[ i ]:Draw()
 	end
@@ -170,13 +170,12 @@ end
 
 function GameScene:Reset()
 	RedrawDisplay()
-	display = Display()
 	self.heart = nil
 	self.totalScore = 0
 	self.gameLV = 1
 	self.lvTimer = 0
-	self.player1 = Player:Init( ( display.X * 2) / 3 , display.Y / 3, "player1", 1 )
-	self.player2 = Player:Init( display.X / 3, display.Y / 3, "player2", 2 )
+	self.player1 = Player:Init( ( CANVASX_MAX * 2) / 3 , CANVASY_MAX / 3, "player1", 1 )
+	self.player2 = Player:Init( CANVASX_MAX / 3, CANVASY_MAX / 3, "player2", 2 )
 	self.entities = { self.player1, self.player2 }
 	self.totalEntities = 2
 end

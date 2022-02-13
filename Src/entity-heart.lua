@@ -3,14 +3,13 @@ Heart.__index = Heart
 
 function Heart:Init()
     spriteSize = SpriteSize()
-    display = Display()
-    xpos = math.random(spriteSize.X, display.x-spriteSize.X)
-    ypos = math.random(spriteSize.Y, display.y-spriteSize.Y)
+    xpos = math.random(CANVASX_MIN + spriteSize.X, CANVASX_MAX-spriteSize.X)
+    ypos = math.random(CANVASY_MIN + spriteSize.Y, CANVASY_MAX-spriteSize.Y)
     local _heart = {
         hitRect = NewRect( xpos, ypos, spriteSize.X, spriteSize.Y ),
         type = TYPE_HEART,
         goal = false,
-        hole_position = { ( display.x - spriteSize.X ) / 2, ( display.y - spriteSize.Y ) / 2 },
+        hole_position = { ( CANVASX_MAX - CANVASX_MIN - spriteSize.X ) / 2, ( CANVASY_MAX - CANVASY_MIN - spriteSize.Y ) / 2 },
     }
     setmetatable(_heart, Heart)
     return _heart
