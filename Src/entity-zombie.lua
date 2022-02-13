@@ -18,6 +18,7 @@ function Zombie:Init(x, y, fH, fV, direction)
         },
         -- out of display flag
         outBound = false,
+        metaSprite = "zombie"
     }
 
 
@@ -73,7 +74,8 @@ function Zombie:Update(timeDelta)
 end
 
 function Zombie:Draw()
+    DrawMetaSprite( self.metaSprite, self.hitRect.X, self.hitRect.Y )
 
-    DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 14, DrawMode.Sprite )
+    --DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 14, DrawMode.Sprite )
 
 end

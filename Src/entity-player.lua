@@ -110,6 +110,6 @@ function Player:GetPosition()
 end
 
 function Player:Draw()
-    -- DrawMetaSprite( self.metaSprite, self.hitRect.X, self.hitRect.Y )
-    DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 8, DrawMode.Sprite )
+    DrawMetaSprite( self.metaSprite, self.hitRect.X, self.hitRect.Y )
+    --DrawRect( self.hitRect.X, self.hitRect.Y, 8, 8, 8, DrawMode.Sprite )
 end

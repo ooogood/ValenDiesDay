@@ -161,6 +161,7 @@ end
 
 function GameScene:Draw()
 	RedrawDisplay()
+	--DrawMetaSprite("background", 0, 0, false, false, DrawMode.TilemapCache)
 	for i = 1, self.totalEntities do 
 		self.entities[ i ]:Draw()
 	end
