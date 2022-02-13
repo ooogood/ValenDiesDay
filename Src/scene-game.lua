@@ -95,6 +95,7 @@ function GameScene:Update(timeDelta)
 	-- check heart and score
 	if( self.heart ~= nil and self.heart.goal == true ) then
 		self.totalScore = self.totalScore + 1
+		PlaySound(9, 0)
 		self.heart = nil
 		for i = 1, self.totalEntities do
 			if self.entities[ i ].type == TYPE_HEART then
