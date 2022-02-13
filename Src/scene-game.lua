@@ -19,6 +19,7 @@ function GameScene:Init()
 		heart = nil,
 		player1 = nil,
 		player2 = nil,
+		musicTimer = 0,
 	}
 
 	setmetatable(_gamescene, GameScene)
@@ -73,6 +74,12 @@ function GameScene:GenerateHeart()
 end
 
 function GameScene:Update(timeDelta)
+	-- handle music
+	self.musicTimer + = timeDelta
+	if( self.musicTimer > 42000 ) then
+		PlaySong( 0, false, 1 )
+		self.musicTimer = 0
+	end
 	-- update game level according to timer
 	self.lvTimer = self.lvTimer + timeDelta
 	if( self.lvTimer > gameLvUpdateDelay ) then
@@ -179,6 +186,8 @@ function GameScene:Reset()
 	self.player2 = Player:Init( CANVASX_MAX / 3, CANVASY_MAX / 3, "player2", 2 )
 	self.entities = { self.player1, self.player2 }
 	self.totalEntities = 2
+	self.musicTimer = 0
+	PlaySong( 0, false, 1 )
 end
 
 function GameScene:GameOver()

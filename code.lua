@@ -35,10 +35,6 @@ function SwitchScene(id)
   activeScene = scenes[activeSceneId]
   activeScene:Reset()
 
-  if (activeSceneId == GAME) then
-    PlaySong(0, false, 1)
-  end
-
   if ( activeSceneId == OVER ) then
     scenes[OVER]:SetTotalScore(scenes[GAME]:GetTotalScore())
     StopSong()
