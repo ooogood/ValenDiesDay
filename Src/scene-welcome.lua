@@ -18,14 +18,14 @@ function WelcomeScene:ShowText()
 	DrawText(TitleText, size.x/2 - (string.len(TitleText) / 2 ) * 8
 	                     , size.y/2 - 4 * 8, DrawMode.Sprite, "large", 15 )
 
-	local hintText = "press enter to start"
+	local hintText = "press enter"
 	DrawText(hintText, size.x/2 - (string.len(hintText) / 2 ) * 8
 	                     , size.y/2 + 4 * 8, DrawMode.Sprite, "small", 15 )
 end
 
 function WelcomeScene:Update(timeDelta)
 	if(Key(Keys.Enter, InputState.Released)) then
-		SwitchScene(GAME)
+		SwitchScene(INTRO)
 	end
 end
 

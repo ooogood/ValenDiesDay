@@ -65,7 +65,8 @@ function Zombie:Update(timeDelta)
         self.hitRect.X = self.hitRect.X + 1
     end
   
-    if self.hitRect.X < 0 or self.hitRect.X > Display().X + 20 or self.hitRect.Y < 0 or self.hitRect.Y > Display().Y + 20 then
+    if self.hitRect.X < CANVASX_MIN or self.hitRect.X > CANVASX_MAX + 20 or
+       self.hitRect.Y < CANVASY_MIN or self.hitRect.Y > CANVASY_MAX + 20 then
         self.outBound = true
     end
 

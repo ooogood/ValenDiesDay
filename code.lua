@@ -1,17 +1,24 @@
 LoadScript("scene-over")
 LoadScript("scene-welcome")
 LoadScript("scene-game")
+LoadScript("scene-intro")
 
 local scenes = nil
 local activeScene = nil
 local activeSceneId = 0
 
 -- define scenes
-WELCOME, GAME, OVER = 1, 2, 3
+WELCOME, INTRO, GAME, OVER = 1, 2, 3, 4
+-- define canvas size
+CANVASX_MIN = 0
+CANVASX_MAX = Display().X
+CANVASY_MIN = 0
+CANVASY_MAX = Display().Y
 
 function Init()
   scenes = {
     WelcomeScene:Init(),
+    IntroScene:Init(),
     GameScene:Init(),
     OverScene:Init(),
   }

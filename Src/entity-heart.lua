@@ -36,17 +36,17 @@ function Heart:UpdatePosition(x, y)
     self.hitRect.Y = y
 
     -- restrict it within boundar
-    if( self.hitRect.X < 0 ) then
-        self.hitRect.X = 0
+    if( self.hitRect.X < CANVASX_MIN ) then
+        self.hitRect.X = CANVASX_MIN
     end
-    if( self.hitRect.Y < 0 ) then
-        self.hitRect.Y = 0
+    if( self.hitRect.Y < CANVASY_MIN ) then
+        self.hitRect.Y = CANVASY_MIN
     end
-    if( self.hitRect.X > Display().X - SpriteSize().X ) then
-        self.hitRect.X = Display().X - SpriteSize().X
+    if( self.hitRect.X > CANVASX_MAX - SpriteSize().X ) then
+        self.hitRect.X = CANVASX_MAX - SpriteSize().X
     end
-    if( self.hitRect.Y > Display().Y - SpriteSize().Y ) then
-        self.hitRect.Y = Display().Y - SpriteSize().Y 
+    if( self.hitRect.Y > CANVASY_MAX - SpriteSize().Y ) then
+        self.hitRect.Y = CANVASY_MAX - SpriteSize().Y 
     end
 end
 

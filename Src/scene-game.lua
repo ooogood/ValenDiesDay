@@ -36,21 +36,21 @@ end
 
 function GameScene:AddEnemy()
 	local direction = math.random( 4 )
-	local xpos = 0
-	local ypos = 0
+	local xpos = CANVASX_MIN
+	local ypos = CANVASY_MIN
 	local fH = false
 
 	if( direction == 1 ) then
-		xpos = math.random() * Display().x
-		ypos = Display().y
+		xpos = math.random( CANVASX_MIN, CANVASX_MAX )
+		ypos = CANVASY_MAX
 	elseif( direction == 2 ) then
-		xpos = math.random() * Display().x 
+		xpos = math.random( CANVASX_MIN, CANVASX_MAX )
 	elseif( direction == 3 ) then
-		xpos = Display().x
-		ypos = math.random() * Display().y 
+		xpos = CANVASX_MAX
+		ypos = math.random( CANVASY_MIN, CANVASY_MAX )
 		fH = true
 	else
-		ypos = math.random() * Display().y 
+		ypos = math.random( CANVASY_MIN, CANVASY_MAX )
 	end
 	
 	enemy = Zombie:Init( xpos, ypos, fH, false, direction )
@@ -148,6 +148,7 @@ function GameScene:Update(timeDelta)
 			self.heart:UpdatePosition( hpos.X, hpos.Y )
 		end
 	end
+	print(string.format("%d", self.totalEntities))
 end
 
 function CheckCollision(o1, o2, spSize)
