@@ -23,7 +23,7 @@ function Player:Init( px, py, spriteName, playerNum )
     -- set all the variables
     local _player = {
         playeridx = playerNum,
-        hitRect = NewRect( px, py, SpriteSize().X, SpriteSize().Y ),
+        hitRect = NewRect( px, py, SpriteSize().X * 2, SpriteSize().Y * 2 ),
         metaSprite = spriteName, 
         keys = nil,
         alive = true,
@@ -82,11 +82,11 @@ function Player:Update( timeDelta )
     if( self.hitRect.Y < CANVASY_MIN ) then
         self.hitRect.Y = CANVASY_MIN
     end
-    if( self.hitRect.X > CANVASX_MAX - SpriteSize().X ) then
-        self.hitRect.X = CANVASX_MAX - SpriteSize().X
+    if( self.hitRect.X > CANVASX_MAX - SpriteSize().X * 2 ) then
+        self.hitRect.X = CANVASX_MAX - SpriteSize().X * 2
     end
-    if( self.hitRect.Y > CANVASY_MAX - SpriteSize().Y ) then
-        self.hitRect.Y = CANVASY_MAX - SpriteSize().Y 
+    if( self.hitRect.Y > CANVASY_MAX - SpriteSize().Y * 2 ) then
+        self.hitRect.Y = CANVASY_MAX - SpriteSize().Y * 2 
     end
 
 end

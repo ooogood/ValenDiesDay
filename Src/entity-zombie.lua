@@ -4,7 +4,7 @@ Zombie.__index = Zombie
 function Zombie:Init(x, y, fH, fV, direction)
 
     local _zombie = {
-        hitRect = NewRect( x, y, SpriteSize().X, SpriteSize().Y ),
+        hitRect = NewRect( x, y, SpriteSize().X, SpriteSize().Y * 2 ),
         flipH = fH or false,
         flipV = fV or false,
         drawMode = DrawMode.Sprite,

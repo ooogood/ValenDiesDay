@@ -8,7 +8,7 @@ GameScene.__index = GameScene
 -- remember to add player type!
 TYPE_PLAYER, TYPE_ZOMBIE, TYPE_HEART = 1, 2, 3
 
-local difficulty = 2
+local difficulty = 1
 local gameLvUpdateDelay = 20000 -- unit: ms
 
 function GameScene:Init()	
@@ -121,17 +121,18 @@ function GameScene:Update(timeDelta)
 	heartPos = self.heart:GetPosition() 
 	p1Pos = self.player1:GetPosition()
 	p2Pos = self.player2:GetPosition()
-	spSize = SpriteSize()
-	if CheckCollision( p1Pos, heartPos, spSize ) then
+	spriteSize = SpriteSize()
+	if CheckCollision( p1Pos, heartPos, spriteSize.X * 2, spriteSize.Y * 2 ) then
 		self.player1:RevertThisFrame()
 	end
-	if CheckCollision( p2Pos, heartPos, spSize ) then
+	if CheckCollision( p2Pos, heartPos, spriteSize.X * 2, spriteSize.Y * 2 ) then
 		self.player2:RevertThisFrame()
 	end
 	for i = 1, self.totalEntities do 
 		if( self.entities[ i ].type == TYPE_ZOMBIE ) then
-			if CheckCollision( p1Pos, self.entities[ i ]:GetPosition(), spSize ) or
-				CheckCollision( p2Pos, self.entities[ i ]:GetPosition(), spSize ) then
+			-- zombie is 8 * 16, other objects are 16 * 16
+			if CheckCollision( p1Pos, self.entities[ i ]:GetPosition(), spriteSize.X, spriteSize.Y * 2 ) or
+				CheckCollision( p2Pos, self.entities[ i ]:GetPosition(), spriteSize.X, spriteSize.Y * 2 ) then
 				self:GameOver()
 				return
 			end
@@ -152,9 +153,9 @@ function GameScene:Update(timeDelta)
 	print(string.format("%d", self.totalEntities))
 end
 
-function CheckCollision(o1, o2, spSize)
-	if( math.abs( o1.X - o2.X ) < spSize.X and 
-		math.abs( o1.Y - o2.Y ) < spSize.Y ) then
+function CheckCollision(o1, o2, gapx, gapy)
+	if( math.abs( o1.X - o2.X ) < gapx and 
+		math.abs( o1.Y - o2.Y ) < gapy) then
 		return true
 	end
 	return false
